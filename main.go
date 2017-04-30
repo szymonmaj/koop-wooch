@@ -16,5 +16,5 @@ func main() {
 		port = "1234"
 	}
 
-	http.ListenAndServe("0.0.0.0"+port, nil)
+	http.ListenAndServe("0.0.0.0:"+port, nil)
 }
