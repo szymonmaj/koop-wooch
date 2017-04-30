@@ -1,6 +1,9 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+	"os"
+)
 
 func main() {
 
@@ -8,5 +11,10 @@ func main() {
 		w.Write([]byte("Hello World!"))
 	})
 
-	http.ListenAndServe("0.0.0.0:1234", nil)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "1234"
+	}
+
+	http.ListenAndServe("0.0.0.0"+port, nil)
 }
