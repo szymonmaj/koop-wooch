@@ -17,7 +17,9 @@ var products = []Product{}
 func main() {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("Hello World!"))
+		write(w, " <a href=\"/product_form\">Add product</a>")
+		write(w, " <a href=\"/products\">Show products</a>")
+
 	})
 	http.HandleFunc("/add_product", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
