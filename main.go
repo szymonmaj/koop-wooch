@@ -33,7 +33,7 @@ func main() {
 	})
 	http.HandleFunc("/product_form", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		write(w, "<form action='add_product'><input name='name'>+<input name='price'><input type='submit' value='Add'></form>")
+		write(w, "<form action='add_product'>PRODUCT<input name='name'>PRICE<input name='price'><input type='submit' value='Add'></form>")
 	})
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
 
