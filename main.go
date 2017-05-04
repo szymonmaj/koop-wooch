@@ -41,10 +41,14 @@ func main() {
 		write(w, "<table>")
 		for _, product := range products {
 
-			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td></tr>", product.Name, product.Price))
+			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td></tr>", product.Name, product.Price, "<form action='Put_in'><input type='submit' value='Put'></form>"))
 
 		}
 		write(w, "</table>")
+
+	})
+	http.HandleFunc("/Put_in", func(w http.ResponseWriter, r *http.Request) {
+		
 	})
 	port := os.Getenv("PORT")
 	if port == "" {
