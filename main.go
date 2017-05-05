@@ -8,9 +8,9 @@ import (
 )
 
 type Product struct {
-	Name string
-	Name1 string
-	Price float64
+	Name     string
+	Category string
+	Price    float64
 }
 
 var products = []Product{}
@@ -34,7 +34,7 @@ func main() {
 		price, _ := strconv.ParseFloat(r.URL.Query().Get("price"), 64)
 
 
-		p := Product{Name: name, Name1: category, Price: price}
+		p := Product{Name: name, Category: category, Price: price}
 
 		products = append(products, p)
 	})
@@ -50,7 +50,7 @@ func main() {
 		write(w, "<table>")
 		for _, product := range products {
 
-			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td><td><form action='Put_in'><input type='hidden' name='name' value='%v'><input type='submit' value='Put'></form></td></tr>", product.Name,product.Name1, product.Price, product.Name))
+			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td><td><form action='Put_in'><input type='hidden' name='name' value='%v'><input type='submit' value='Put'></form></td></tr>", product.Name,product.Category, product.Price, product.Name))
 
 		}
 		write(w, "</table>")
