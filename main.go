@@ -37,6 +37,8 @@ func main() {
 		p := Product{Name: name, Category: category, Price: price}
 
 		products = append(products, p)
+		http.Redirect(w, r, "/", 303)
+
 	})
 
 	http.HandleFunc("/product_form", func(w http.ResponseWriter, r *http.Request) {
