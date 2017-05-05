@@ -6,11 +6,12 @@ import (
 	"strconv"
 	"fmt"
 )
+
 type Product struct {
 	Name string
 	Price float64
-
 }
+
 var products = []Product{}
 
 
@@ -21,6 +22,7 @@ func main() {
 		write(w, " <a href=\"/products\">Show products</a>")
 
 	})
+
 	http.HandleFunc("/add_product", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
@@ -31,10 +33,12 @@ func main() {
 
 		products = append(products, p)
 	})
+
 	http.HandleFunc("/product_form", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		write(w, "<form action='add_product'>PRODUCT<input name='name'>PRICE<input name='price'><input type='submit' value='Add'></form>")
 	})
+
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
 
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -50,6 +54,7 @@ func main() {
 	http.HandleFunc("/Put_in", func(w http.ResponseWriter, r *http.Request) {
 		
 	})
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "1234"
