@@ -41,7 +41,7 @@ func main() {
 		write(w, "<table>")
 		for _, product := range products {
 
-			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td></tr>", product.Name, product.Price, "<form action='Put_in'><input type='submit' value='Put'></form>"))
+			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td></tr>", product.Name, product.Price, "<form action='Put_in'><input type='hidden' name='name'><input type='submit' value='Put'></form>"))
 
 		}
 		write(w, "</table>")
