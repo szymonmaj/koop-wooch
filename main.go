@@ -18,6 +18,8 @@ var products = []Product{}
 
 func main() {
 
+	addExampleData()
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		write(w, " <a href=\"/product_form\">Add product</a>")
 		write(w, " <a href=\"/products\">Show products</a>")
@@ -67,4 +69,9 @@ func main() {
 }
 func write(w http.ResponseWriter, text string) {
 	w.Write([]byte(text))
+}
+
+func addExampleData() {
+	products = append(products, Product{"Carrot", "Vegetables", 123})
+	products = append(products, Product{"Apple", "Fruits", 666})
 }
