@@ -8,6 +8,7 @@ import (
 )
 type Product struct {
 	Name string
+	Name1 string
 	Price float64
 
 }
@@ -25,15 +26,17 @@ func main() {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
 		name := r.URL.Query().Get("name")
+		category := r.URL.Query().Get("category")
 		price, _ := strconv.ParseFloat(r.URL.Query().Get("price"), 64)
 
-		p := Product{Name: name, Price: price}
+
+		p := Product{Name: name, Name1: category, Price: price}
 
 		products = append(products, p)
 	})
 	http.HandleFunc("/product_form", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		write(w, "<form action='add_product'>PRODUCT<input name='name'>PRICE<input name='price'><input type='submit' value='Add'></form>")
+		write(w, "<form action='add_product'>PRODUCT<input name='name'>CATEGORY<input name='category'>PRICE<input name='price'><input type='submit' value='Add'></form>")
 	})
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
 
@@ -41,7 +44,7 @@ func main() {
 		write(w, "<table>")
 		for _, product := range products {
 
-			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td></tr>", product.Name, product.Price))
+			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td></tr>", product.Name,product.Name1, product.Price))
 
 		}
 		write(w, "</table>")
