@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"fmt"
+	"html/template"
 )
 
 type Product struct {
@@ -16,13 +17,25 @@ type Product struct {
 var products = []Product{}
 
 
+type Supplier struct {
+	Name string
+}
+
+var suppliers = []Supplier{}
+
+var templates = template.Must(template.ParseFiles("templates/suppliers.html"))
+
 func main() {
 
 	addExampleData()
 
+
+
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		write(w, " <a href=\"/product_form\">Add product</a>")
 		write(w, " <a href=\"/products\">Show products</a>")
+		write(w, " <a href='/suppliers'>Suppliers</a>")
 
 	})
 
@@ -32,7 +45,6 @@ func main() {
 		name := r.URL.Query().Get("name")
 		category := r.URL.Query().Get("category")
 		price, _ := strconv.ParseFloat(r.URL.Query().Get("price"), 64)
-
 
 		p := Product{Name: name, Category: category, Price: price}
 
@@ -62,6 +74,12 @@ func main() {
 
 	})
 
+	http.HandleFunc("/suppliers", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		renderTemplate(w, "suppliers", suppliers)
+	})
+
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "1234"
@@ -76,4 +94,14 @@ func write(w http.ResponseWriter, text string) {
 func addExampleData() {
 	products = append(products, Product{"Carrot", "Vegetables", 123})
 	products = append(products, Product{"Apple", "Fruits", 666})
+
+	suppliers = append(suppliers, Supplier{"Zdzisław Sztacheta"})
+	suppliers = append(suppliers, Supplier{"Tesco"})
+}
+
+func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
+	err := templates.ExecuteTemplate(w, tmpl+".html", data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
