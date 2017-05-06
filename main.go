@@ -23,7 +23,7 @@ type Supplier struct {
 
 var suppliers = []Supplier{}
 
-var templates = template.Must(template.ParseFiles("templates/suppliers.html"))
+var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html"))
 
 func main() {
 
@@ -33,9 +33,12 @@ func main() {
 
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		write(w, "<h2>Welocome to Koop!</h2>")
 		write(w, " <a href=\"/product_form\">Add product</a>")
 		write(w, " <a href=\"/products\">Show products</a>")
-		write(w, " <a href='/suppliers'>Suppliers</a>")
+		write(w, " <a href='/supplier_form'>Add supplier</a>")
+		write(w, " <a href='/suppliers'>Show suppliers</a>")
 
 	})
 
@@ -77,6 +80,17 @@ func main() {
 	http.HandleFunc("/suppliers", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		renderTemplate(w, "suppliers", suppliers)
+	})
+
+	http.HandleFunc("/supplier_form", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		renderTemplate(w, "supplier_form", nil)
+	})
+
+	http.HandleFunc("/add_supplier", func(w http.ResponseWriter, r *http.Request) {
+		name := r.URL.Query().Get("name")
+		suppliers = append(suppliers, Supplier{name})
+		http.Redirect(w, r, "/suppliers", 303)
 	})
 
 
