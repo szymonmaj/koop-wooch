@@ -1,11 +1,11 @@
 package main
 
 import (
+	"fmt"
+	"html/template"
 	"net/http"
 	"os"
 	"strconv"
-	"fmt"
-	"html/template"
 )
 
 type Product struct {
@@ -15,7 +15,6 @@ type Product struct {
 }
 
 var products = []Product{}
-
 
 type Supplier struct {
 	Name string
@@ -28,9 +27,6 @@ var templates = template.Must(template.ParseFiles("templates/suppliers.html", "t
 func main() {
 
 	addExampleData()
-
-
-
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -67,7 +63,7 @@ func main() {
 		write(w, "<table>")
 		for _, product := range products {
 
-			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td><td><form action='Put_in'><input type='hidden' name='name' value='%v'><input type='submit' value='Put'></form></td></tr>", product.Name,product.Category, product.Price, product.Name))
+			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td><td><form action='Put_in'><input type='hidden' name='name' value='%v'><input type='submit' value='Put'></form></td></tr>", product.Name, product.Category, product.Price, product.Name))
 
 		}
 		write(w, "</table>")
@@ -92,7 +88,6 @@ func main() {
 		suppliers = append(suppliers, Supplier{name})
 		http.Redirect(w, r, "/suppliers", 303)
 	})
-
 
 	port := os.Getenv("PORT")
 	if port == "" {
