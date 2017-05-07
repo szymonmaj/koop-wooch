@@ -24,7 +24,16 @@ type Supplier struct {
 
 var suppliers = []Supplier{}
 
-var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html"))
+type Category struct {
+	Name         string
+	CategoryType string
+}
+
+var category = []Category{}
+
+var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html", "templates/category.html", "templates/category_form.html"))
+
+//var templates = template.Must(template.ParseFiles("templates/category.html", "templates/category_form.html"))
 
 func main() {
 
@@ -37,6 +46,8 @@ func main() {
 		write(w, " <a href=\"/products\">Show products</a>")
 		write(w, " <a href='/supplier_form'>Add supplier</a>")
 		write(w, " <a href='/suppliers'>Show suppliers</a>")
+		write(w, " <a href='/category_form'>Add category</a>")
+		write(w, " <a href='/category'>Show category</a>")
 
 	})
 
@@ -92,13 +103,27 @@ func main() {
 		http.Redirect(w, r, "/suppliers", 303)
 	})
 
+	http.HandleFunc("/category_form", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		renderTemplate(w, "category_form", nil)
+	})
+
+	http.HandleFunc("/add_category", func(w http.ResponseWriter, r *http.Request) {
+		name := r.URL.Query().Get("name")
+		day := MustParseWeekday(r.URL.Query().Get("Category"))
+		suppliers = append(suppliers, Supplier{name, day})
+		http.Redirect(w, r, "/category", 303)
+	})
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "1234"
 	}
 
 	http.ListenAndServe("0.0.0.0:"+port, nil)
+
 }
+
 func write(w http.ResponseWriter, text string) {
 	w.Write([]byte(text))
 }
