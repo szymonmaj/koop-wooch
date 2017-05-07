@@ -7,6 +7,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+ "github.com/gorilla/mux"
 )
 
 type Product struct {
@@ -27,6 +29,8 @@ var suppliers = []Supplier{}
 var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html"))
 
 func main() {
+
+	_ = mux.NewRouter()
 
 	addExampleData()
 
