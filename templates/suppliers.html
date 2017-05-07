@@ -10,7 +10,7 @@
             margin: 10px;
         }
 
-        td {
+        td, th {
             padding: 4px;
         }
     </style>
@@ -21,8 +21,9 @@
 
 
 <table>
+    <tr><th>Name</th><th>Delivery day</th></tr>
 {{range .}}
-<tr><td>{{.Name}}</td></tr>
+<tr><td>{{.Name}}</td><td>{{.DeliveryDay}}</td></tr>
 {{end}}
 </table>
 

@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 )
 
 type Product struct {
@@ -17,7 +18,8 @@ type Product struct {
 var products = []Product{}
 
 type Supplier struct {
-	Name string
+	Name        string
+	DeliveryDay time.Weekday
 }
 
 var suppliers = []Supplier{}
@@ -85,7 +87,8 @@ func main() {
 
 	http.HandleFunc("/add_supplier", func(w http.ResponseWriter, r *http.Request) {
 		name := r.URL.Query().Get("name")
-		suppliers = append(suppliers, Supplier{name})
+		day := MustParseWeekday(r.URL.Query().Get("delivery_day"))
+		suppliers = append(suppliers, Supplier{name, day})
 		http.Redirect(w, r, "/suppliers", 303)
 	})
 
@@ -104,13 +107,34 @@ func addExampleData() {
 	products = append(products, Product{"Carrot", "Vegetables", 123})
 	products = append(products, Product{"Apple", "Fruits", 666})
 
-	suppliers = append(suppliers, Supplier{"Zdzisław Sztacheta"})
-	suppliers = append(suppliers, Supplier{"Tesco"})
+	suppliers = append(suppliers, Supplier{"Zdzisław Sztacheta", time.Monday})
+	suppliers = append(suppliers, Supplier{"Tesco", time.Friday})
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
 	err := templates.ExecuteTemplate(w, tmpl+".html", data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func MustParseWeekday(weekday string) time.Weekday {
+	switch weekday {
+	case "Monday":
+		return time.Monday
+	case "Tuesday":
+		return time.Tuesday
+	case "Wednesday":
+		return time.Wednesday
+	case "Thursday":
+		return time.Thursday
+	case "Friday":
+		return time.Friday
+	case "Saturday":
+		return time.Saturday
+	case "Sunday":
+		return time.Sunday
+	default:
+		panic(fmt.Sprintf("Wrong weekday: %v", weekday))
 	}
 }
