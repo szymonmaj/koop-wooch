@@ -103,6 +103,10 @@ func main() {
 		http.Redirect(w, r, "/suppliers", 303)
 	})
 
+	http.HandleFunc("/category", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		renderTemplate(w, "category", category)
+	})
 	http.HandleFunc("/category_form", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		renderTemplate(w, "category_form", nil)
@@ -110,8 +114,7 @@ func main() {
 
 	http.HandleFunc("/add_category", func(w http.ResponseWriter, r *http.Request) {
 		name := r.URL.Query().Get("name")
-		day := MustParseWeekday(r.URL.Query().Get("Category"))
-		suppliers = append(suppliers, Supplier{name, day})
+		category = append(category, Category{name, name})
 		http.Redirect(w, r, "/category", 303)
 	})
 
