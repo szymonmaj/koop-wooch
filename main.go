@@ -28,7 +28,6 @@ var suppliers = []Supplier{}
 
 type Category struct {
 	Name         string
-	CategoryType string
 }
 
 
@@ -119,8 +118,7 @@ func main() {
 
 	http.HandleFunc("/add_category", func(w http.ResponseWriter, r *http.Request) {
 		name := r.URL.Query().Get("name")
-		TypeOfCategory := r.URL.Query().Get("type")
-		categories = append(categories, Category{name,TypeOfCategory })
+		categories = append(categories, Category{name})
 		http.Redirect(w, r, "/categories", 303)
 	})
 
