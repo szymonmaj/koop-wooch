@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
- "github.com/gorilla/mux"
+	"github.com/gorilla/mux"
 )
 
 type Product struct {
@@ -27,15 +27,12 @@ type Supplier struct {
 var suppliers = []Supplier{}
 
 type Category struct {
-	Name         string
+	Name string
 }
-
-
 
 var categories = []Category{}
 
 var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html", "templates/categories.html", "templates/category_form.html"))
-
 
 func main() {
 
@@ -71,7 +68,14 @@ func main() {
 
 	http.HandleFunc("/product_form", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		write(w, "<form action='add_product'>PRODUCT<input name='name'>CATEGORY<input name='category'>PRICE<input name='price'><input type='submit' value='Add'></form>")
+		html := "<form action='add_product'>PRODUCT<input name='name'>CATEGORY" +
+			"<select name='category'>"
+		for _, category := range categories {
+			html += "<option>" + category.Name + "</option>"
+		}
+		html += "</select>" +
+			"PRICE<input name='price'><input type='submit' value='Add'></form>"
+		write(w, html)
 	})
 
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
