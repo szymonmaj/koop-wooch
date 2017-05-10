@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Koop > Categories List</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        table {
+            margin: 10px;
+        }
+
+        td, th {
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Categories List</h2>
+
+html := "<form action='add_product'>PRODUCT<input name='name'>CATEGORY" +
+    "<select name='category'>"
+        for _, category := range categories {
+        html += "<option>" + category.Name + "</option>"
+        }
+        html += "</select>" +
+    "PRICE<input name='price'><input type='submit' value='Add'></form>"
+write(w, html)
+
+<a href="/">Home</a> <a href="/product_form">Add product</a> <a href="/products">Show products</a> <a href='/supplier_form'>Add supplier</a> <a href='/suppliers'>Show suppliers</a> <a href='/category_form'>Add category</a> <a href='/category'>Show category</a>
+
+</body>
+</html>
