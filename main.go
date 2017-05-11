@@ -69,14 +69,6 @@ func main() {
 	http.HandleFunc("/product_form", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		renderTemplate(w, "categorieslist", categories)
-		//html := "<form action='add_product'>PRODUCT<input name='name'>CATEGORY" +
-		//	"<select name='category'>"
-		//for _, category := range categories {
-		//	html += "<option>" + category.Name + "</option>"
-		//}
-		//html += "</select>" +
-		//	"PRICE<input name='price'><input type='submit' value='Add'></form>"
-		//write(w, html)
 	})
 
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {

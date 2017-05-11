@@ -3,7 +3,9 @@
 
 <form action='add_product'>PRODUCT<input name='name'>CATEGORY
     <select name='category'>
-        <option>.Name</option>
+        {{range .}}
+        <option>{{.Name}}</option>
+        {{end}}
     </select>
 
     PRICE<input name='price'><input type='submit' value='Add'></form>
