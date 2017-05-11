@@ -1,6 +1,11 @@
-<h2>Products</h2>
+<h2 xmlns="http://www.w3.org/1999/html">Products</h2>
 
+<table>
+    <tr><th>Name</th><th>Category<th><th>Price</th></tr>
+    {{range .}}
+    <tr><td>{{.Name}}</td><td>{{.Category}}<td><td>{{.Price}}</td></tr>
+    {{end}}
+</table>
 
-<tr><td>%v</td><td>%v</td><td>%v</td><td><form action='Put_in'><input type='hidden' name='name' value='%v'><input type='submit' value='Put'></form></td></tr>", product.Name, product.Category, product.Price, product.Name))
 
 <a href="/">Home</a> <a href="/product_form">Add product</a> <a href="/products">Show products</a> <a href='/supplier_form'>Add supplier</a> <a href='/category_form'>Add category</a> <a href='/categories'>Show categories</a>

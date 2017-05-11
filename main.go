@@ -32,7 +32,7 @@ type Category struct {
 
 var categories = []Category{}
 
-var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html", "templates/categories.html", "templates/category_form.html", "templates/categorieslist.html"))
+var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html", "templates/categories.html", "templates/category_form.html", "templates/product_form.html", "templates/products.html"))
 
 func main() {
 
@@ -54,7 +54,6 @@ func main() {
 
 	http.HandleFunc("/add_product", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-
 		name := r.URL.Query().Get("name")
 		category := r.URL.Query().Get("category")
 		price, _ := strconv.ParseFloat(r.URL.Query().Get("price"), 64)
@@ -68,19 +67,19 @@ func main() {
 
 	http.HandleFunc("/product_form", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		renderTemplate(w, "categorieslist", categories)
+		renderTemplate(w, "product_form", categories)
 	})
 
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
-
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		write(w, "<table>")
-		for _, product := range products {
+		renderTemplate(w, "products", products)
+		//write(w, "<table>")
+		//for _, product := range products {
 
-			write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td><td><form action='Put_in'><input type='hidden' name='name' value='%v'><input type='submit' value='Put'></form></td></tr>", product.Name, product.Category, product.Price, product.Name))
+		//	write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td><td><form action='Put_in'><input type='hidden' name='name' value='%v'><input type='submit' value='Put'></form></td></tr>", product.Name, product.Category, product.Price, product.Name))
 
-		}
-		write(w, "</table>")
+		//}
+		//write(w, "</table>")
 
 	})
 	http.HandleFunc("/Put_in", func(w http.ResponseWriter, r *http.Request) {
