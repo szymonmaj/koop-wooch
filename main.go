@@ -32,7 +32,7 @@ type Category struct {
 
 var categories = []Category{}
 
-var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html", "templates/categories.html", "templates/category_form.html"))
+var templates = template.Must(template.ParseFiles("templates/suppliers.html", "templates/supplier_form.html", "templates/categories.html", "templates/category_form.html", "templates/categorieslist.html"))
 
 func main() {
 
@@ -68,14 +68,7 @@ func main() {
 
 	http.HandleFunc("/product_form", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		html := "<form action='add_product'>PRODUCT<input name='name'>CATEGORY" +
-			"<select name='category'>"
-		for _, category := range categories {
-			html += "<option>" + category.Name + "</option>"
-		}
-		html += "</select>" +
-			"PRICE<input name='price'><input type='submit' value='Add'></form>"
-		write(w, html)
+		renderTemplate(w, "categorieslist", categories)
 	})
 
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
