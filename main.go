@@ -19,6 +19,8 @@ type Product struct {
 
 var products = []Product{}
 
+var shoppingCart = []Product{}
+
 type Supplier struct {
 	Name        string
 	DeliveryDay time.Weekday
@@ -76,7 +78,16 @@ func main() {
 
 	})
 	http.HandleFunc("/Put_in", func(w http.ResponseWriter, r *http.Request) {
+		name := r.URL.Query().Get("name")
+		for _, product := range products {
+			if name == product.Name {
+				shoppingCart = append(shoppingCart, product)
+			}
+		}
 
+		// TODO show total amount of shopping cart
+
+		//http.Redirect(w, r, "/shopping_cart", 303)
 	})
 
 	http.HandleFunc("/suppliers", func(w http.ResponseWriter, r *http.Request) {
