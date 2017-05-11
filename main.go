@@ -73,6 +73,7 @@ func main() {
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		renderTemplate(w, "products", products)
+		http.Redirect(w, r, "/products", 303)
 		//write(w, "<table>")
 		//for _, product := range products {
 
