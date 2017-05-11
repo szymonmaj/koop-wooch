@@ -1,0 +1,12 @@
+<h2>Products</h2>
+
+<table>
+    <tr><th>Name</th><th>Category<th><th>Price</th></tr>
+    {{range .}}
+    <tr><td>{{.Name}}</td><td>{{.Category}}<td><td>{{.Price}}<td><td><form action='Put_in'><input type='hidden' name='name' value='{{.Name}}'><input type='submit' value='Put'></form></td></tr>
+    {{end}}
+
+</table>
+
+
+<a href="/">Home</a> <a href="/product_form">Add product</a> <a href="/products">Show products</a> <a href='/supplier_form'>Add supplier</a> <a href='/category_form'>Add category</a> <a href='/categories'>Show categories</a>
