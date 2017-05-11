@@ -73,14 +73,6 @@ func main() {
 	http.HandleFunc("/products", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		renderTemplate(w, "products", products)
-		http.Redirect(w, r, "/products", 303)
-		//write(w, "<table>")
-		//for _, product := range products {
-
-		//	write(w, fmt.Sprintf("<tr><td>%v</td><td>%v</td><td>%v</td><td><form action='Put_in'><input type='hidden' name='name' value='%v'><input type='submit' value='Put'></form></td></tr>", product.Name, product.Category, product.Price, product.Name))
-
-		//}
-		//write(w, "</table>")
 
 	})
 	http.HandleFunc("/Put_in", func(w http.ResponseWriter, r *http.Request) {
