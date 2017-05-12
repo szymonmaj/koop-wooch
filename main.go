@@ -141,6 +141,9 @@ func addExampleData() {
 
 	suppliers = append(suppliers, Supplier{"Zdzisław Sztacheta", time.Monday})
 	suppliers = append(suppliers, Supplier{"Tesco", time.Friday})
+
+	categories = append(categories,Category{ "Vegetables" })
+	categories = append(categories,Category{ "Fruits" })
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, data interface{}) {
