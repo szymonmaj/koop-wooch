@@ -15,6 +15,8 @@ type Product struct {
 	Name     string
 	Category string
 	Price    float64
+	Unit 	 string
+	Quantity float64
 }
 
 var products = []Product{}
@@ -59,8 +61,10 @@ func main() {
 		name := r.URL.Query().Get("name")
 		category := r.URL.Query().Get("category")
 		price, _ := strconv.ParseFloat(r.URL.Query().Get("price"), 64)
+		unit:= r.URL.Query().Get("unit")
+		quantity, _:= strconv.ParseFloat(r.URL.Query().Get("quantity"), 64)
 
-		p := Product{Name: name, Category: category, Price: price}
+		p := Product{Name: name, Category: category, Unit: unit, Quantity: quantity, Price: price}
 
 		products = append(products, p)
 		http.Redirect(w, r, "/", 303)
@@ -136,8 +140,8 @@ func write(w http.ResponseWriter, text string) {
 }
 
 func addExampleData() {
-	products = append(products, Product{"Carrot", "Vegetables", 123})
-	products = append(products, Product{"Apple", "Fruits", 666})
+	products = append(products, Product{"Carrot", "Vegetables", 123, "piece"	, 100 })
+	products = append(products, Product{"Apple", "Fruits", 666, "kg", 200})
 
 	suppliers = append(suppliers, Supplier{"Zdzisław Sztacheta", time.Monday})
 	suppliers = append(suppliers, Supplier{"Tesco", time.Friday})
@@ -173,3 +177,14 @@ func MustParseWeekday(weekday string) time.Weekday {
 		panic(fmt.Sprintf("Wrong weekday: %v", weekday))
 	}
 }
+
+//func MustParseUnit(option string) unit.Option {
+//	switch option {
+//	case "piece":
+//		return unit.piece
+//	case "kg":
+//		return unit.kg
+//	default:
+//		panic(fmt.Sprintf("Wrong unit: &v", option))
+//	}
+//}
