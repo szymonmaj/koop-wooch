@@ -17,6 +17,7 @@ type Product struct {
 	Price    float64
 	Unit 	 string
 	Quantity float64
+
 }
 
 var products = []Product{}
@@ -86,6 +87,7 @@ func main() {
 		unit := r.URL.Query().Get("unit")
 		quantity, _:= strconv.ParseFloat(r.URL.Query().Get("quantity"), 64)
 		price, _ := strconv.ParseFloat(r.URL.Query().Get("price"), 64)
+		allprice, _ := strconv.ParseFloat(r.URL.Query().Get("allprice"), 64)
 		for _, product := range products {
 			if name == product.Name {
 				shoppingCart = append(shoppingCart, product)
@@ -99,12 +101,13 @@ func main() {
 			if price == product.Price {
 				shoppingCart = append(shoppingCart, product)
 			}
-			price += product.Price
+			allprice = allprice + product.Price
 			quantity += product.Quantity
 		}
-		p := Product{Name: name, Unit: unit, Quantity: quantity, Price: price}
-		products = append(products, p)
 
+		p := Product{Name: name, Unit: unit, Quantity: quantity, Price: price,}
+		products = append(products, p)
+		// napisz mi jak to zrobić
 		// TODO show total amount of shopping cart
 
 		//http.Redirect(w, r, "/shopping_cart", 303)
