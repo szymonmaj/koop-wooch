@@ -83,11 +83,27 @@ func main() {
 	})
 	http.HandleFunc("/Put_in", func(w http.ResponseWriter, r *http.Request) {
 		name := r.URL.Query().Get("name")
+		unit := r.URL.Query().Get("unit")
+		quantity, _:= strconv.ParseFloat(r.URL.Query().Get("quantity"), 64)
+		price, _ := strconv.ParseFloat(r.URL.Query().Get("price"), 64)
 		for _, product := range products {
 			if name == product.Name {
 				shoppingCart = append(shoppingCart, product)
 			}
+			if unit == product.Unit {
+				shoppingCart = append(shoppingCart, product)
+			}
+			if quantity == product.Quantity {
+				shoppingCart = append(shoppingCart, product)
+			}
+			if price == product.Price {
+				shoppingCart = append(shoppingCart, product)
+			}
+			price += product.Price
+			quantity += product.Quantity
 		}
+		p := Product{Name: name, Unit: unit, Quantity: quantity, Price: price}
+		products = append(products, p)
 
 		// TODO show total amount of shopping cart
 
